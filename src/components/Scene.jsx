@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { TrackballControls, Stars } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import * as THREE from 'three'
 import StarField from './StarField'
 
 export default function Scene({ learnings, selectedLearning, onStarClick }) {
@@ -41,6 +42,12 @@ export default function Scene({ learnings, selectedLearning, onStarClick }) {
         maxDistance={50}
         rotateSpeed={1.5}
         zoomSpeed={1.2}
+        enableKeys={false}
+        mouseButtons={{
+          LEFT: THREE.MOUSE.ROTATE,
+          MIDDLE: THREE.MOUSE.DOLLY,
+          RIGHT: THREE.MOUSE.PAN
+        }}
       />
 
       {/* Post-processing for glow effect */}

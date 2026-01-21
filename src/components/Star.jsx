@@ -33,7 +33,17 @@ export default function Star({ learning, isSelected, isRelated, onClick }) {
     <mesh
       ref={meshRef}
       position={[learning.position.x, learning.position.y, learning.position.z]}
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation()
+        onClick()
+      }}
+      onPointerDown={(e) => {
+        e.stopPropagation()
+      }}
+      onPointerUp={(e) => {
+        e.stopPropagation()
+        onClick()
+      }}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >
