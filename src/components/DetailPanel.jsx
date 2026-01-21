@@ -8,12 +8,13 @@ export default function DetailPanel({ learning, learnings, onClose, onRelatedCli
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 50 }}
-        className="fixed top-0 right-0 md:top-1/2 md:right-8 md:-translate-y-1/2
-                   bottom-0 md:bottom-auto left-0 md:left-auto
-                   w-full md:w-96 max-h-screen md:max-h-[80vh]
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 100 }}
+        className="fixed bottom-0 left-0 right-0
+                   md:top-1/2 md:right-8 md:left-auto md:bottom-auto md:-translate-y-1/2
+                   w-full md:w-96
+                   max-h-[60vh] md:max-h-[80vh]
                    glass rounded-t-3xl md:rounded-3xl p-6 md:p-8
                    text-white overflow-y-auto hide-scrollbar
                    z-50"

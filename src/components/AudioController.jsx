@@ -8,20 +8,24 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   const [audioStarted, setAudioStarted] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
 
-  // Initialize audio
+  // Initialize audio - ALWAYS show button immediately
   useEffect(() => {
     const initAudio = async () => {
       try {
         console.log('Attempting to initialize audio...')
 
+        // SHOW BUTTON IMMEDIATELY - don't wait for anything
+        setAudioStarted(true)
+        console.log('Audio button visible immediately')
+
         // Try to start audio context
         await Tone.start()
         console.log('Tone.js audio context started')
 
-        // Create reverb effect
+        // Create reverb effect (this is slow, but button is already visible)
         reverbRef.current = new Tone.Reverb({
-          decay: 8,
-          wet: 0.6,
+          decay: 4,  // Reduced from 8 for faster generation
+          wet: 0.5,
           preDelay: 0.01
         }).toDestination()
 
@@ -37,7 +41,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             sustain: 0.7,
             release: 8
           },
-          volume: -24 // Very quiet ambient drone
+          volume: -15 // Audible ambient drone
         }).connect(reverbRef.current)
         console.log('Ambient synth created')
 
@@ -63,7 +67,6 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
           console.log('Audio initialized but not playing (enabled=false)')
         }
 
-        setAudioStarted(true)
         setShowPrompt(false)
         console.log('Audio initialization complete!')
       } catch (error) {
@@ -90,31 +93,50 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
 
   // Handle enable/disable
   useEffect(() => {
-    if (ambientSynthRef.current && audioStarted) {
-      if (enabled) {
-        ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
-      } else {
-        ambientSynthRef.current.releaseAll()
+    const handleToggle = async () => {
+      if (ambientSynthRef.current && audioStarted) {
+        if (enabled) {
+          // Start audio context on first user interaction
+          await Tone.start()
+          console.log('Audio context started')
+
+          ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
+          Tone.Transport.start()
+          console.log('Ambient music playing')
+        } else {
+          ambientSynthRef.current.releaseAll()
+          console.log('Ambient music stopped')
+        }
       }
     }
+
+    handleToggle()
   }, [enabled, audioStarted])
 
   // Play sound when star is selected
   useEffect(() => {
-    if (selectedLearning && clickSynthRef.current && enabled && audioStarted) {
-      // Map position to pitch for spatial audio effect
-      const baseNote = 60 // Middle C
-      const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
-      const midiNote = baseNote + pitchOffset
+    const playSound = async () => {
+      if (selectedLearning && clickSynthRef.current && enabled && audioStarted) {
+        // Start audio context on first user interaction
+        await Tone.start()
 
-      // Play note
-      clickSynthRef.current.triggerAttackRelease(
-        Tone.Frequency(midiNote, 'midi'),
-        '4n',
-        Tone.now(),
-        0.5
-      )
+        // Map position to pitch for spatial audio effect
+        const baseNote = 60 // Middle C
+        const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
+        const midiNote = baseNote + pitchOffset
+
+        // Play note
+        clickSynthRef.current.triggerAttackRelease(
+          Tone.Frequency(midiNote, 'midi'),
+          '4n',
+          Tone.now(),
+          0.5
+        )
+        console.log('Click sound played')
+      }
     }
+
+    playSound()
   }, [selectedLearning, enabled, audioStarted])
 
   const handleUserInteraction = async () => {
