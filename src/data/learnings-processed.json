@@ -1,0 +1,197 @@
+[
+  {
+    "id": 1,
+    "text": "It's okay to not have things figured out",
+    "context": "24M Educator/entrepreneur",
+    "position": {
+      "x": 10,
+      "y": 0.05758442823610643,
+      "z": -1.0626296380136626
+    },
+    "related": [
+      12,
+      9,
+      10
+    ]
+  },
+  {
+    "id": 2,
+    "text": "People ain't shit",
+    "context": "23M Law student",
+    "position": {
+      "x": 4.141386527282641,
+      "y": -9.970887483367013,
+      "z": -7.620190111885465
+    },
+    "related": [
+      4,
+      3,
+      1
+    ]
+  },
+  {
+    "id": 3,
+    "text": "I'm the goat",
+    "context": "24M Consultant",
+    "position": {
+      "x": -3.203074654917656,
+      "y": -10,
+      "z": -7.515552078171891
+    },
+    "related": [
+      2,
+      8,
+      12
+    ]
+  },
+  {
+    "id": 4,
+    "text": "Don't trust institutions",
+    "context": "62M Retired engineer",
+    "position": {
+      "x": 5.655760441083725,
+      "y": 1.2546545819623685,
+      "z": -3.3166315319102573
+    },
+    "related": [
+      7,
+      2,
+      10
+    ]
+  },
+  {
+    "id": 5,
+    "text": "Journal more",
+    "context": "32M Tech CEO",
+    "position": {
+      "x": -9.25000388668133,
+      "y": 5.09895243903876,
+      "z": -8.762626649843046
+    },
+    "related": [
+      6,
+      11,
+      9
+    ]
+  },
+  {
+    "id": 6,
+    "text": "Go out more",
+    "context": "24F Venture capitalist",
+    "position": {
+      "x": -4.524582948591263,
+      "y": 9.454626414878216,
+      "z": -10
+    },
+    "related": [
+      5,
+      9,
+      11
+    ]
+  },
+  {
+    "id": 7,
+    "text": "Be very cautious at every stage of your life",
+    "context": "66M Retired accountant",
+    "position": {
+      "x": 4.183717577142511,
+      "y": 8.930689282951612,
+      "z": 3.1978377414210524
+    },
+    "related": [
+      10,
+      4,
+      9
+    ]
+  },
+  {
+    "id": 8,
+    "text": "Be humble - we're instruments of God/something larger",
+    "context": "60F Homemaker",
+    "position": {
+      "x": 2.899770785414251,
+      "y": -2.7151591499011793,
+      "z": -3.375290102875521
+    },
+    "related": [
+      1,
+      10,
+      4
+    ]
+  },
+  {
+    "id": 9,
+    "text": "I need to be more confident about my decisions",
+    "context": "31F Educator",
+    "position": {
+      "x": 3.0551317424442352,
+      "y": 10,
+      "z": -2.469812173948819
+    },
+    "related": [
+      1,
+      7,
+      6
+    ]
+  },
+  {
+    "id": 10,
+    "text": "Don't give into emotions, be rational and calm",
+    "context": "26F Between jobs",
+    "position": {
+      "x": 5.881791431279101,
+      "y": 4.058979566044895,
+      "z": 7.8100441127780975
+    },
+    "related": [
+      7,
+      9,
+      12
+    ]
+  },
+  {
+    "id": 11,
+    "text": "Riyaaz roz karna chahiye (Practice daily)",
+    "context": "22F Musician",
+    "position": {
+      "x": -8.661114192941096,
+      "y": 5.071154136065916,
+      "z": 6.344145395315593
+    },
+    "related": [
+      7,
+      6,
+      10
+    ]
+  },
+  {
+    "id": 12,
+    "text": "It's okay to cry",
+    "context": "22F Musician",
+    "position": {
+      "x": 5.787890175555724,
+      "y": -4.375827844930277,
+      "z": 2.9718604457395905
+    },
+    "related": [
+      1,
+      10,
+      2
+    ]
+  },
+  {
+    "id": 13,
+    "text": "Rayon is the best fabric",
+    "context": "24F Entrepreneur/mathematician",
+    "position": {
+      "x": -10,
+      "y": -8.089500499942972,
+      "z": 10
+    },
+    "related": [
+      11,
+      3,
+      5
+    ]
+  }
+]
