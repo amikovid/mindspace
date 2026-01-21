@@ -12,8 +12,11 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   useEffect(() => {
     const initAudio = async () => {
       try {
+        console.log('Attempting to initialize audio...')
+
         // Try to start audio context
         await Tone.start()
+        console.log('Tone.js audio context started')
 
         // Create reverb effect
         reverbRef.current = new Tone.Reverb({
@@ -23,6 +26,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
         }).toDestination()
 
         await reverbRef.current.generate()
+        console.log('Reverb effect created')
 
         // Create ambient pad synth with richer sound
         ambientSynthRef.current = new Tone.PolySynth(Tone.Synth, {
@@ -35,6 +39,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
           },
           volume: -24 // Very quiet ambient drone
         }).connect(reverbRef.current)
+        console.log('Ambient synth created')
 
         // Create click synth for interaction sounds
         clickSynthRef.current = new Tone.PolySynth(Tone.Synth, {
@@ -47,17 +52,22 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
           },
           volume: -12
         }).connect(reverbRef.current)
+        console.log('Click synth created')
 
         // Start ambient drone with multiple notes for richness
         if (enabled) {
           ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
           Tone.Transport.start()
+          console.log('Ambient drone started (enabled=true)')
+        } else {
+          console.log('Audio initialized but not playing (enabled=false)')
         }
 
         setAudioStarted(true)
         setShowPrompt(false)
+        console.log('Audio initialization complete!')
       } catch (error) {
-        console.log('Audio autoplay blocked, waiting for user interaction')
+        console.log('Audio autoplay blocked, waiting for user interaction:', error.message)
         setShowPrompt(true)
       }
     }
@@ -108,10 +118,57 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   }, [selectedLearning, enabled, audioStarted])
 
   const handleUserInteraction = async () => {
-    await Tone.start()
-    setAudioStarted(true)
-    setShowPrompt(false)
-    onToggle()
+    try {
+      await Tone.start()
+      console.log('Audio context started successfully')
+
+      // Initialize synths if not already done
+      if (!ambientSynthRef.current) {
+        // Create reverb effect
+        reverbRef.current = new Tone.Reverb({
+          decay: 8,
+          wet: 0.6,
+          preDelay: 0.01
+        }).toDestination()
+        await reverbRef.current.generate()
+
+        // Create ambient pad synth
+        ambientSynthRef.current = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 4,
+            decay: 2,
+            sustain: 0.7,
+            release: 8
+          },
+          volume: -24
+        }).connect(reverbRef.current)
+
+        // Create click synth
+        clickSynthRef.current = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.01,
+            decay: 0.3,
+            sustain: 0.1,
+            release: 0.5
+          },
+          volume: -12
+        }).connect(reverbRef.current)
+
+        // Start ambient drone
+        ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
+        console.log('Ambient synth started')
+      }
+
+      setAudioStarted(true)
+      setShowPrompt(false)
+      if (!enabled) {
+        onToggle()
+      }
+    } catch (error) {
+      console.error('Failed to start audio:', error)
+    }
   }
 
   return (

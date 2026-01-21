@@ -7,7 +7,7 @@ import learningsData from './data/learnings-processed.json'
 
 function App() {
   const [selectedLearning, setSelectedLearning] = useState(null)
-  const [audioEnabled, setAudioEnabled] = useState(false)
+  const [audioEnabled, setAudioEnabled] = useState(true)
 
   const handleStarClick = (learning) => {
     setSelectedLearning(learning)
