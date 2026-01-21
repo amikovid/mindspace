@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Stars } from '@react-three/drei'
+import { TrackballControls, Stars } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import StarField from './StarField'
 
@@ -32,15 +32,14 @@ export default function Scene({ learnings, selectedLearning, onStarClick }) {
       />
 
       {/* Camera controls */}
-      <OrbitControls
-        enablePan={false}
-        enableZoom={true}
-        enableRotate={true}
-        enableDamping={true}
-        dampingFactor={0.05}
+      <TrackballControls
+        noPan={true}
+        noZoom={false}
+        noRotate={false}
+        dynamicDampingFactor={0.1}
         minDistance={5}
         maxDistance={50}
-        rotateSpeed={0.5}
+        rotateSpeed={1.5}
         zoomSpeed={1.2}
       />
 

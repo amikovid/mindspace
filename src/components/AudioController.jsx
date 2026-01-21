@@ -11,12 +11,12 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   // Initialize audio - ALWAYS show button immediately
   useEffect(() => {
     const initAudio = async () => {
+      // SHOW BUTTON IMMEDIATELY - don't wait for anything
+      setAudioStarted(true)
+      console.log('Audio button visible immediately')
+
       try {
         console.log('Attempting to initialize audio...')
-
-        // SHOW BUTTON IMMEDIATELY - don't wait for anything
-        setAudioStarted(true)
-        console.log('Audio button visible immediately')
 
         // Try to start audio context
         await Tone.start()
@@ -41,7 +41,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             sustain: 0.7,
             release: 8
           },
-          volume: -15 // Audible ambient drone
+          volume: -20 // Reduced volume for ambient drone
         }).connect(reverbRef.current)
         console.log('Ambient synth created')
 
@@ -54,11 +54,11 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             sustain: 0.1,
             release: 0.5
           },
-          volume: -12
+          volume: -16 // Reduced volume for click sounds
         }).connect(reverbRef.current)
         console.log('Click synth created')
 
-        // Start ambient drone with multiple notes for richness
+        // Start ambient drone with multiple notes for richness (lower volume)
         if (enabled) {
           ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
           Tone.Transport.start()
@@ -89,9 +89,9 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
         reverbRef.current.dispose()
       }
     }
-  }, [])
+  }, [enabled])
 
-  // Handle enable/disable
+  // Handle enable/disable - controls ONLY ambient music
   useEffect(() => {
     const handleToggle = async () => {
       if (!audioStarted) return
@@ -110,6 +110,10 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
           }
 
           if (ambientSynthRef.current) {
+            // Reconnect if it was disconnected
+            if (!ambientSynthRef.current.output.output) {
+              ambientSynthRef.current.connect(reverbRef.current)
+            }
             ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
             Tone.Transport.start()
             console.log('✅ Ambient music playing!')
@@ -117,9 +121,11 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             console.error('❌ Ambient synth still not ready')
           }
         } else {
+          // When muted, STOP ambient music completely (not just volume)
           if (ambientSynthRef.current) {
             ambientSynthRef.current.releaseAll()
-            console.log('Ambient music stopped')
+            ambientSynthRef.current.disconnect()
+            console.log('🔇 Ambient music stopped completely')
           }
         }
       } catch (error) {
@@ -130,10 +136,10 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
     handleToggle()
   }, [enabled, audioStarted])
 
-  // Play sound when star is selected
+  // Play sound when star is selected - ALWAYS play clicks regardless of mute state
   useEffect(() => {
     const playSound = async () => {
-      if (!selectedLearning || !enabled || !audioStarted) return
+      if (!selectedLearning || !audioStarted) return
 
       try {
         // Start audio context on first user interaction
@@ -150,7 +156,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
           const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
           const midiNote = baseNote + pitchOffset
 
-          // Play note
+          // Play note - clicks play regardless of enabled state
           clickSynthRef.current.triggerAttackRelease(
             Tone.Frequency(midiNote, 'midi'),
             '4n',
@@ -167,7 +173,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
     }
 
     playSound()
-  }, [selectedLearning, enabled, audioStarted])
+  }, [selectedLearning, audioStarted])
 
   const handleUserInteraction = async () => {
     try {
@@ -193,7 +199,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             sustain: 0.7,
             release: 8
           },
-          volume: -24
+          volume: -20
         }).connect(reverbRef.current)
 
         // Create click synth
@@ -205,7 +211,7 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
             sustain: 0.1,
             release: 0.5
           },
-          volume: -12
+          volume: -16
         }).connect(reverbRef.current)
 
         // Start ambient drone
