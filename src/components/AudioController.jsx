@@ -62,13 +62,13 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
         if (enabled) {
           ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
           Tone.Transport.start()
-          console.log('Ambient drone started (enabled=true)')
+          console.log('✅ Ambient drone started automatically (enabled=true)')
         } else {
-          console.log('Audio initialized but not playing (enabled=false)')
+          console.log('⚠️ Audio initialized but not playing (enabled=false)')
         }
 
         setShowPrompt(false)
-        console.log('Audio initialization complete!')
+        console.log('✅ Audio initialization complete - synths ready!')
       } catch (error) {
         console.log('Audio autoplay blocked, waiting for user interaction:', error.message)
         setShowPrompt(true)
@@ -94,19 +94,36 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   // Handle enable/disable
   useEffect(() => {
     const handleToggle = async () => {
-      if (ambientSynthRef.current && audioStarted) {
-        if (enabled) {
-          // Start audio context on first user interaction
-          await Tone.start()
-          console.log('Audio context started')
+      if (!audioStarted) return
 
-          ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
-          Tone.Transport.start()
-          console.log('Ambient music playing')
+      try {
+        // Start audio context on first user interaction
+        await Tone.start()
+        console.log('Audio context started')
+
+        if (enabled) {
+          // Check if synths are ready
+          if (!ambientSynthRef.current) {
+            console.log('Synths not ready yet, waiting...')
+            // Wait a bit for initialization
+            await new Promise(resolve => setTimeout(resolve, 100))
+          }
+
+          if (ambientSynthRef.current) {
+            ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
+            Tone.Transport.start()
+            console.log('✅ Ambient music playing!')
+          } else {
+            console.error('❌ Ambient synth still not ready')
+          }
         } else {
-          ambientSynthRef.current.releaseAll()
-          console.log('Ambient music stopped')
+          if (ambientSynthRef.current) {
+            ambientSynthRef.current.releaseAll()
+            console.log('Ambient music stopped')
+          }
         }
+      } catch (error) {
+        console.error('Error toggling audio:', error)
       }
     }
 
@@ -116,23 +133,36 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
   // Play sound when star is selected
   useEffect(() => {
     const playSound = async () => {
-      if (selectedLearning && clickSynthRef.current && enabled && audioStarted) {
+      if (!selectedLearning || !enabled || !audioStarted) return
+
+      try {
         // Start audio context on first user interaction
         await Tone.start()
 
-        // Map position to pitch for spatial audio effect
-        const baseNote = 60 // Middle C
-        const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
-        const midiNote = baseNote + pitchOffset
+        // Wait for synth if not ready
+        if (!clickSynthRef.current) {
+          await new Promise(resolve => setTimeout(resolve, 100))
+        }
 
-        // Play note
-        clickSynthRef.current.triggerAttackRelease(
-          Tone.Frequency(midiNote, 'midi'),
-          '4n',
-          Tone.now(),
-          0.5
-        )
-        console.log('Click sound played')
+        if (clickSynthRef.current) {
+          // Map position to pitch for spatial audio effect
+          const baseNote = 60 // Middle C
+          const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
+          const midiNote = baseNote + pitchOffset
+
+          // Play note
+          clickSynthRef.current.triggerAttackRelease(
+            Tone.Frequency(midiNote, 'midi'),
+            '4n',
+            Tone.now(),
+            0.5
+          )
+          console.log('✅ Click sound played, note:', midiNote)
+        } else {
+          console.error('❌ Click synth not ready')
+        }
+      } catch (error) {
+        console.error('Error playing click sound:', error)
       }
     }
 
