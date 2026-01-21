@@ -36,10 +36,12 @@ export default function Scene({ learnings, selectedLearning, onStarClick }) {
         enablePan={false}
         enableZoom={true}
         enableRotate={true}
-        minDistance={15}
-        maxDistance={50}
+        enableDamping={true}
         dampingFactor={0.05}
+        minDistance={5}
+        maxDistance={50}
         rotateSpeed={0.5}
+        zoomSpeed={1.2}
       />
 
       {/* Post-processing for glow effect */}

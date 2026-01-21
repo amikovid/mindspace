@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import * as Tone from 'tone'
 
 export default function AudioController({ selectedLearning, enabled, onToggle }) {
-  const synthRef = useRef(null)
+  const ambientSynthRef = useRef(null)
+  const clickSynthRef = useRef(null)
+  const reverbRef = useRef(null)
   const [audioStarted, setAudioStarted] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
 
@@ -13,27 +15,42 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
         // Try to start audio context
         await Tone.start()
 
-        // Create ambient synth
-        synthRef.current = new Tone.PolySynth(Tone.Synth, {
+        // Create reverb effect
+        reverbRef.current = new Tone.Reverb({
+          decay: 8,
+          wet: 0.6,
+          preDelay: 0.01
+        }).toDestination()
+
+        await reverbRef.current.generate()
+
+        // Create ambient pad synth with richer sound
+        ambientSynthRef.current = new Tone.PolySynth(Tone.Synth, {
           oscillator: { type: 'sine' },
           envelope: {
-            attack: 2,
-            decay: 1,
-            sustain: 0.5,
-            release: 3
-          }
-        }).toDestination()
+            attack: 4,
+            decay: 2,
+            sustain: 0.7,
+            release: 8
+          },
+          volume: -24 // Very quiet ambient drone
+        }).connect(reverbRef.current)
 
-        const reverb = new Tone.Reverb({
-          decay: 5,
-          wet: 0.5
-        }).toDestination()
+        // Create click synth for interaction sounds
+        clickSynthRef.current = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.01,
+            decay: 0.3,
+            sustain: 0.1,
+            release: 0.5
+          },
+          volume: -12
+        }).connect(reverbRef.current)
 
-        synthRef.current.connect(reverb)
-
-        // Start ambient drone
+        // Start ambient drone with multiple notes for richness
         if (enabled) {
-          synthRef.current.triggerAttack(['C2', 'G2'], Tone.now())
+          ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
           Tone.Transport.start()
         }
 
@@ -48,38 +65,44 @@ export default function AudioController({ selectedLearning, enabled, onToggle })
     initAudio()
 
     return () => {
-      if (synthRef.current) {
-        synthRef.current.releaseAll()
-        synthRef.current.dispose()
+      if (ambientSynthRef.current) {
+        ambientSynthRef.current.releaseAll()
+        ambientSynthRef.current.dispose()
+      }
+      if (clickSynthRef.current) {
+        clickSynthRef.current.dispose()
+      }
+      if (reverbRef.current) {
+        reverbRef.current.dispose()
       }
     }
   }, [])
 
   // Handle enable/disable
   useEffect(() => {
-    if (synthRef.current && audioStarted) {
+    if (ambientSynthRef.current && audioStarted) {
       if (enabled) {
-        synthRef.current.triggerAttack(['C2', 'G2'], Tone.now())
+        ambientSynthRef.current.triggerAttack(['C2', 'G2', 'C3', 'E3'], Tone.now())
       } else {
-        synthRef.current.releaseAll()
+        ambientSynthRef.current.releaseAll()
       }
     }
   }, [enabled, audioStarted])
 
   // Play sound when star is selected
   useEffect(() => {
-    if (selectedLearning && synthRef.current && enabled && audioStarted) {
-      // Map position to pitch
+    if (selectedLearning && clickSynthRef.current && enabled && audioStarted) {
+      // Map position to pitch for spatial audio effect
       const baseNote = 60 // Middle C
       const pitchOffset = Math.floor((selectedLearning.position.x + 10) / 20 * 24)
       const midiNote = baseNote + pitchOffset
 
       // Play note
-      synthRef.current.triggerAttackRelease(
+      clickSynthRef.current.triggerAttackRelease(
         Tone.Frequency(midiNote, 'midi'),
-        '8n',
+        '4n',
         Tone.now(),
-        0.3
+        0.5
       )
     }
   }, [selectedLearning, enabled, audioStarted])

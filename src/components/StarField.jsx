@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import Star from './Star'
 
 export default function StarField({ learnings, selectedLearning, onStarClick }) {
-  const { camera } = useThree()
+  const { camera, controls } = useThree()
   const targetPosition = useRef(new THREE.Vector3())
   const targetLookAt = useRef(new THREE.Vector3())
   const isAnimating = useRef(false)
@@ -30,16 +30,15 @@ export default function StarField({ learnings, selectedLearning, onStarClick }) 
     }
   }, [selectedLearning, learnings])
 
-  // Smooth camera animation
+  // Smooth camera animation that works with OrbitControls
   useFrame(() => {
-    if (isAnimating.current) {
+    if (isAnimating.current && controls) {
+      // Animate camera position
       camera.position.lerp(targetPosition.current, 0.05)
 
-      const currentLookAt = new THREE.Vector3()
-      camera.getWorldDirection(currentLookAt)
-      currentLookAt.multiplyScalar(10).add(camera.position)
-      currentLookAt.lerp(targetLookAt.current, 0.05)
-      camera.lookAt(currentLookAt)
+      // Animate OrbitControls target
+      controls.target.lerp(targetLookAt.current, 0.05)
+      controls.update()
 
       // Stop animating when close enough
       if (camera.position.distanceTo(targetPosition.current) < 0.1) {
