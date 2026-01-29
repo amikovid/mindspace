@@ -5,13 +5,13 @@
     "context": "24M Educator/entrepreneur",
     "position": {
       "x": 10,
-      "y": 0.05758442823610643,
-      "z": -1.0626296380136626
+      "y": 0.3055574602144784,
+      "z": 0.8985207715044972
     },
     "related": [
       12,
       9,
-      10
+      17
     ]
   },
   {
@@ -19,14 +19,14 @@
     "text": "People ain't shit",
     "context": "23M Law student",
     "position": {
-      "x": 4.141386527282641,
-      "y": -9.970887483367013,
-      "z": -7.620190111885465
+      "x": 4.04796476323858,
+      "y": -10,
+      "z": -7.3416590575712295
     },
     "related": [
       4,
       3,
-      1
+      15
     ]
   },
   {
@@ -34,9 +34,9 @@
     "text": "I'm the goat",
     "context": "24M Consultant",
     "position": {
-      "x": -3.203074654917656,
-      "y": -10,
-      "z": -7.515552078171891
+      "x": -3.385352113808409,
+      "y": -9.765518875382218,
+      "z": -6.577270422576809
     },
     "related": [
       2,
@@ -49,9 +49,9 @@
     "text": "Don't trust institutions",
     "context": "62M Retired engineer",
     "position": {
-      "x": 5.655760441083725,
-      "y": 1.2546545819623685,
-      "z": -3.3166315319102573
+      "x": 5.174474228028068,
+      "y": 1.3082039180129978,
+      "z": -4.476033283067712
     },
     "related": [
       7,
@@ -64,9 +64,9 @@
     "text": "Journal more",
     "context": "32M Tech CEO",
     "position": {
-      "x": -9.25000388668133,
-      "y": 5.09895243903876,
-      "z": -8.762626649843046
+      "x": -8.993031864967714,
+      "y": 5.568534393426724,
+      "z": -7.051780086161235
     },
     "related": [
       6,
@@ -79,8 +79,8 @@
     "text": "Go out more",
     "context": "24F Venture capitalist",
     "position": {
-      "x": -4.524582948591263,
-      "y": 9.454626414878216,
+      "x": -4.3639070314026265,
+      "y": 10,
       "z": -10
     },
     "related": [
@@ -94,9 +94,9 @@
     "text": "Be very cautious at every stage of your life",
     "context": "66M Retired accountant",
     "position": {
-      "x": 4.183717577142511,
-      "y": 8.930689282951612,
-      "z": 3.1978377414210524
+      "x": 4.382340702042729,
+      "y": 9.01472590131264,
+      "z": -1.1792055137835753
     },
     "related": [
       10,
@@ -109,9 +109,9 @@
     "text": "Be humble - we're instruments of God/something larger",
     "context": "60F Homemaker",
     "position": {
-      "x": 2.899770785414251,
-      "y": -2.7151591499011793,
-      "z": -3.375290102875521
+      "x": 1.779694323847922,
+      "y": -2.4958007826802113,
+      "z": -2.7958062494744675
     },
     "related": [
       1,
@@ -124,9 +124,9 @@
     "text": "I need to be more confident about my decisions",
     "context": "31F Educator",
     "position": {
-      "x": 3.0551317424442352,
-      "y": 10,
-      "z": -2.469812173948819
+      "x": 2.811072604587075,
+      "y": 9.787421154856982,
+      "z": -5.303650735085357
     },
     "related": [
       1,
@@ -139,14 +139,14 @@
     "text": "Don't give into emotions, be rational and calm",
     "context": "26F Community builder",
     "position": {
-      "x": 5.881791431279101,
-      "y": 4.058979566044895,
-      "z": 7.8100441127780975
+      "x": 5.406589840932803,
+      "y": 5.246934411164055,
+      "z": 7.5561350991041785
     },
     "related": [
       7,
-      9,
-      12
+      14,
+      9
     ]
   },
   {
@@ -154,9 +154,9 @@
     "text": "Riyaaz roz karna chahiye (Practice daily)",
     "context": "22F Musician",
     "position": {
-      "x": -8.661114192941096,
-      "y": 5.071154136065916,
-      "z": 6.344145395315593
+      "x": -8.161650414063505,
+      "y": 6.254935424715438,
+      "z": 6.8721302510573
     },
     "related": [
       7,
@@ -169,14 +169,14 @@
     "text": "It's okay to cry",
     "context": "22F Musician",
     "position": {
-      "x": 5.787890175555724,
-      "y": -4.375827844930277,
-      "z": 2.9718604457395905
+      "x": 5.472255935482892,
+      "y": -3.637453803785781,
+      "z": 3.627088635356529
     },
     "related": [
       1,
       10,
-      2
+      15
     ]
   },
   {
@@ -185,8 +185,8 @@
     "context": "24F Entrepreneur/mathematician",
     "position": {
       "x": -10,
-      "y": -8.089500499942972,
-      "z": 10
+      "y": -7.136651895923908,
+      "z": 8.336135020926609
     },
     "related": [
       11,
@@ -199,14 +199,59 @@
     "text": "Stay with the problem. Give it time",
     "context": "26F Educator",
     "position": {
-      "x": -6.5,
-      "y": 7.2,
-      "z": 4.8
+      "x": 2.981893428584426,
+      "y": 5.051907434852767,
+      "z": 10
     },
     "related": [
-      9,
       10,
-      11
+      17,
+      1
+    ]
+  },
+  {
+    "id": 15,
+    "text": "This is not the age to take responsibility",
+    "context": "24M Marketer",
+    "position": {
+      "x": 7.181942523884594,
+      "y": 1.2433750398635635,
+      "z": -6.04553280004343
+    },
+    "related": [
+      1,
+      7,
+      4
+    ]
+  },
+  {
+    "id": 16,
+    "text": "It's less about what good you would have than what evil you would live with",
+    "context": "41M Musician/engineer",
+    "position": {
+      "x": 3.3778914681250605,
+      "y": 0.856970938881938,
+      "z": -5.400599005048607
+    },
+    "related": [
+      7,
+      1,
+      9
+    ]
+  },
+  {
+    "id": 17,
+    "text": "All problems are solvable",
+    "context": "23M Engineer/entrepreneur",
+    "position": {
+      "x": 4.023392673471289,
+      "y": 0.2508101622110246,
+      "z": 9.499245494071879
+    },
+    "related": [
+      14,
+      1,
+      10
     ]
   }
 ]
