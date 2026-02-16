@@ -1,11 +1,14 @@
 import { useState, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Scene from './components/Scene'
 import DetailPanel from './components/DetailPanel'
 import AudioController from './components/AudioController'
 import LoadingScreen from './components/LoadingScreen'
+import ContributePage from './components/ContributePage'
+import AdminPage from './components/AdminPage'
 import learningsData from './data/learnings-processed.json'
 
-function App() {
+function ConstellationView() {
   const [selectedLearning, setSelectedLearning] = useState(null)
   const [audioEnabled, setAudioEnabled] = useState(true)
 
@@ -49,6 +52,18 @@ function App() {
         onToggle={() => setAudioEnabled(!audioEnabled)}
       />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ConstellationView />} />
+        <Route path="/contribute" element={<ContributePage />} />
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
