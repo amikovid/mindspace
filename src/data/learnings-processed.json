@@ -253,5 +253,50 @@
       1,
       10
     ]
+  },
+  {
+    "id": 18,
+    "text": "Life is easy inside of your comfort zone but the stories worth telling always happen outside of it.",
+    "context": "30M Connector",
+    "position": {
+      "x": -6.312847291034582,
+      "y": 3.7719284610238764,
+      "z": -8.124563920174391
+    },
+    "related": [
+      6,
+      15,
+      1
+    ]
+  },
+  {
+    "id": 19,
+    "text": "Trust your inner intuition and love fully whenever you can",
+    "context": "26F Figuring things out",
+    "position": {
+      "x": 7.8834729103458,
+      "y": -4.219284610238764,
+      "z": 5.334563920174391
+    },
+    "related": [
+      9,
+      10,
+      12
+    ]
+  },
+  {
+    "id": 20,
+    "text": "Put \"10/10?\" at the top of your todo list — a guiding question like Derek Sivers' \"hell yeah or no\" to solve overwhelm.",
+    "context": "23M Engineer",
+    "position": {
+      "x": -2.541738492817364,
+      "y": -7.883920461738291,
+      "z": 3.762918374629183
+    },
+    "related": [
+      5,
+      14,
+      17
+    ]
   }
 ]
