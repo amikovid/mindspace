@@ -151,7 +151,7 @@ export default function ContributePage() {
                 transition={{ delay: 0.4 }}
                 className="text-white/70 text-lg relative z-10"
               >
-                Your wisdom has been received and will be reviewed for inclusion in the constellation.
+                Your wisdom has been shared with Kovid, the creator of Mindspace. If accepted, it will be added to the constellation.
               </motion.p>
             </motion.div>
 

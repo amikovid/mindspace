@@ -1,16 +1,62 @@
-import { Canvas } from '@react-three/fiber'
+import { useRef } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { TrackballControls, Stars } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import StarField from './StarField'
 
-export default function Scene({ learnings, selectedLearning, onStarClick }) {
+// Inner component — runs inside Canvas so it can use useFrame
+function ConstellationGroup({ learnings, selectedLearning, onStarClick, isEntering }) {
+  const groupRef = useRef()
+  const spinStart = useRef(null)
+  const { camera } = useThree()
+
+  const SPIN_DURATION = 1.4   // seconds — long enough to still be moving as glass clears
+  const SPIN_X = 0.52         // obvious tilt, ~30° arc
+  const CAM_START_Z = 30      // natural starting position — no jump
+  const CAM_END_Z = 22        // pull viewer in close
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+
+    if (isEntering) {
+      if (spinStart.current === null) {
+        spinStart.current = state.clock.elapsedTime
+      }
+      const elapsed = state.clock.elapsedTime - spinStart.current
+      const t = Math.min(elapsed / SPIN_DURATION, 1)
+
+      // Ease out cubic — confident snap, soft landing
+      const eased = 1 - Math.pow(1 - t, 3)
+
+      // X tilt only — eases to final position and stays
+      groupRef.current.rotation.x = eased * SPIN_X
+      groupRef.current.rotation.y = 0
+
+      // Zoom in — linear so it's still visibly moving when glass clears
+      camera.position.z = CAM_START_Z + (CAM_END_Z - CAM_START_Z) * t
+    } else {
+      spinStart.current = null
+    }
+  })
+
+  return (
+    <group ref={groupRef}>
+      <StarField
+        learnings={learnings}
+        selectedLearning={selectedLearning}
+        onStarClick={onStarClick}
+      />
+    </group>
+  )
+}
+
+export default function Scene({ learnings, selectedLearning, onStarClick, isEntering }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 30], fov: 60 }}
       style={{ background: '#000000' }}
     >
-      {/* Background stars for atmosphere */}
       <Stars
         radius={100}
         depth={50}
@@ -21,18 +67,16 @@ export default function Scene({ learnings, selectedLearning, onStarClick }) {
         speed={1}
       />
 
-      {/* Lighting */}
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1} />
 
-      {/* Star field of learnings */}
-      <StarField
+      <ConstellationGroup
         learnings={learnings}
         selectedLearning={selectedLearning}
         onStarClick={onStarClick}
+        isEntering={isEntering}
       />
 
-      {/* Camera controls */}
       <TrackballControls
         noPan={true}
         noZoom={false}
@@ -50,7 +94,6 @@ export default function Scene({ learnings, selectedLearning, onStarClick }) {
         }}
       />
 
-      {/* Post-processing for glow effect */}
       <EffectComposer>
         <Bloom
           luminanceThreshold={0.3}
