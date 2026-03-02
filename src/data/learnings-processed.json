@@ -298,5 +298,140 @@
       14,
       17
     ]
+  },
+  {
+    "id": 21,
+    "text": "Always ask what do you gain by being his/her friend? If you can't answer, then it's not the right relationship for you.",
+    "context": "27F Analyst",
+    "position": {
+      "x": -7.5,
+      "y": -3.2,
+      "z": -5.8
+    },
+    "related": [
+      2,
+      10,
+      19
+    ]
+  },
+  {
+    "id": 22,
+    "text": "Everything that you can think of is REAL.",
+    "context": "26M Marketer",
+    "position": {
+      "x": 1.3,
+      "y": -8.7,
+      "z": -3.4
+    },
+    "related": [
+      8,
+      1,
+      14
+    ]
+  },
+  {
+    "id": 23,
+    "text": "Life doesn't end at parenthood, it begins.",
+    "context": "37F Consultant",
+    "position": {
+      "x": -5.1,
+      "y": 7.4,
+      "z": 2.6
+    },
+    "related": [
+      1,
+      6,
+      18
+    ]
+  },
+  {
+    "id": 24,
+    "text": "There's more time in your hands than excuses in your head. Do the thing. Mess it up. Do it better. But whatever you do, don't marry too early.",
+    "context": "23M Product Designer/Architect",
+    "position": {
+      "x": 8.7,
+      "y": -6.1,
+      "z": -2.3
+    },
+    "related": [
+      20,
+      14,
+      17
+    ]
+  },
+  {
+    "id": 25,
+    "text": "Sab Moh Maaya hai (All is illusion).",
+    "context": "25M Human",
+    "position": {
+      "x": -1.8,
+      "y": 4.6,
+      "z": -8.9
+    },
+    "related": [
+      8,
+      10,
+      16
+    ]
+  },
+  {
+    "id": 26,
+    "text": "Don't give in to your anger or any other carnal desires on the spur of the moment.",
+    "context": "24M Product Designer",
+    "position": {
+      "x": 6.3,
+      "y": -8.2,
+      "z": 1.7
+    },
+    "related": [
+      10,
+      7,
+      25
+    ]
+  },
+  {
+    "id": 27,
+    "text": "Optimise your life for fun.",
+    "context": "26F Something with growth",
+    "position": {
+      "x": -8.9,
+      "y": -1.5,
+      "z": 4.2
+    },
+    "related": [
+      6,
+      18,
+      15
+    ]
+  },
+  {
+    "id": 28,
+    "text": "God is everything you need.",
+    "context": "24M Data Analyst",
+    "position": {
+      "x": 3.7,
+      "y": 3.3,
+      "z": -9.1
+    },
+    "related": [
+      8,
+      25,
+      19
+    ]
+  },
+  {
+    "id": 29,
+    "text": "The capital tightens its grip around the fabric of economy more and more. Burn its tentacles down or we shall all face the consequences of its gluttony.",
+    "context": "23M Student",
+    "position": {
+      "x": -4.6,
+      "y": -5.8,
+      "z": 7.3
+    },
+    "related": [
+      4,
+      2,
+      16
+    ]
   }
 ]
