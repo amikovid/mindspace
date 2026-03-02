@@ -4,7 +4,19 @@ import { Line } from '@react-three/drei'
 import * as THREE from 'three'
 import Star from './Star'
 
-export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery }) {
+// Indigo #818cf8 (young, ≤18) → Amber #fbbf24 (old, ≥72)
+function getAgeColor(context) {
+  const match = context.match(/^(\d+)/)
+  if (!match) return null
+  const age = parseInt(match[1])
+  const t = Math.min(Math.max((age - 18) / 54, 0), 1) // 0 at 18, 1 at 72
+  const r = Math.round(129 + (251 - 129) * t)  // 129 → 251
+  const g = Math.round(140 + (191 - 140) * t)  // 140 → 191
+  const b = Math.round(248 + (36  - 248) * t)  // 248 → 36
+  return `rgb(${r},${g},${b})`
+}
+
+export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery, showAge }) {
   const { camera, controls } = useThree()
   const targetPosition = useRef(new THREE.Vector3())
   const targetLookAt = useRef(new THREE.Vector3())
@@ -57,6 +69,7 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
           ? !learning.text.toLowerCase().includes(searchQuery.toLowerCase()) &&
             !learning.context.toLowerCase().includes(searchQuery.toLowerCase())
           : false
+        const ageColor = showAge ? getAgeColor(learning.context) : null
 
         return (
           <Star
@@ -65,6 +78,7 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
             isSelected={isSelected}
             isRelated={isRelated}
             isDimmed={isDimmed}
+            ageColor={ageColor}
             onClick={() => onStarClick(learning)}
           />
         )

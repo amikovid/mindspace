@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export default function Star({ learning, isSelected, isRelated, isDimmed, onClick }) {
+export default function Star({ learning, isSelected, isRelated, isDimmed, ageColor, onClick }) {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
   const opacityRef = useRef(1)
@@ -31,7 +31,8 @@ export default function Star({ learning, isSelected, isRelated, isDimmed, onClic
     }
   })
 
-  const color = isSelected ? '#88ccff' : isRelated ? '#ffaa88' : '#ffffff'
+  // Selection states always win; age color only shows on neutral stars
+  const color = isSelected ? '#88ccff' : isRelated ? '#ffaa88' : (ageColor || '#ffffff')
 
   return (
     <mesh

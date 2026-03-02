@@ -9,6 +9,7 @@ import ContributePage from './components/ContributePage'
 import AdminPage from './components/AdminPage'
 import LandingScreen from './components/LandingScreen'
 import SearchBar from './components/SearchBar'
+import AgeToggle from './components/AgeToggle'
 import learningsData from './data/learnings-processed.json'
 
 function ConstellationView() {
@@ -17,6 +18,7 @@ function ConstellationView() {
   const [showLanding, setShowLanding] = useState(true)
   const [isEntering, setIsEntering] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [showAge, setShowAge] = useState(false)
 
   const handleEnter = () => {
     setIsEntering(true)                               // spin starts immediately
@@ -53,6 +55,7 @@ function ConstellationView() {
             onStarClick={handleStarClick}
             isEntering={isEntering}
             searchQuery={searchQuery}
+            showAge={showAge}
           />
         </Suspense>
       </div>
@@ -81,6 +84,7 @@ function ConstellationView() {
           />
 
           <SearchBar onSearch={setSearchQuery} />
+          <AgeToggle onToggle={setShowAge} />
 
           {/* Contribute floating button — bottom right */}
           <AnimatePresence>
