@@ -1,87 +1,31 @@
 [
-  {
-    "id": 1,
-    "text": "It's okay to not have things figured out",
-    "context": "24M Educator/entrepreneur"
-  },
-  {
-    "id": 2,
-    "text": "People ain't shit",
-    "context": "23M Law student"
-  },
-  {
-    "id": 3,
-    "text": "I'm the goat",
-    "context": "24M Consultant"
-  },
-  {
-    "id": 4,
-    "text": "Don't trust institutions",
-    "context": "62M Retired engineer"
-  },
-  {
-    "id": 5,
-    "text": "Journal more",
-    "context": "32M Tech CEO"
-  },
-  {
-    "id": 6,
-    "text": "Go out more",
-    "context": "24F Venture capitalist"
-  },
-  {
-    "id": 7,
-    "text": "Be very cautious at every stage of your life",
-    "context": "66M Retired accountant"
-  },
-  {
-    "id": 8,
-    "text": "Be humble - we're instruments of God/something larger",
-    "context": "60F Homemaker"
-  },
-  {
-    "id": 9,
-    "text": "I need to be more confident about my decisions",
-    "context": "31F Educator"
-  },
-  {
-    "id": 10,
-    "text": "Don't give into emotions, be rational and calm",
-    "context": "26F Community builder"
-  },
-  {
-    "id": 11,
-    "text": "Riyaaz roz karna chahiye (Practice daily)",
-    "context": "22F Musician"
-  },
-  {
-    "id": 12,
-    "text": "It's okay to cry",
-    "context": "22F Musician"
-  },
-  {
-    "id": 13,
-    "text": "Rayon is the best fabric",
-    "context": "24F Entrepreneur/mathematician"
-  },
-  {
-    "id": 14,
-    "text": "Stay with the problem. Give it time",
-    "context": "26F Educator"
-  },
-  {
-    "id": 15,
-    "text": "This is not the age to take responsibility",
-    "context": "24M Marketer"
-  },
-  {
-    "id": 16,
-    "text": "It's less about what good you would have than what evil you would live with",
-    "context": "41M Musician/engineer"
-  },
-  {
-    "id": 17,
-    "text": "All problems are solvable",
-    "context": "23M Engineer/entrepreneur"
-  }
+  { "id": 1, "text": "It's okay to not have things figured out", "context": "24M Educator/entrepreneur" },
+  { "id": 2, "text": "People ain't shit", "context": "23M Law student" },
+  { "id": 3, "text": "I'm the goat", "context": "24M Consultant" },
+  { "id": 4, "text": "Don't trust institutions", "context": "62M Retired engineer" },
+  { "id": 5, "text": "Journal more", "context": "32M Tech CEO" },
+  { "id": 6, "text": "Go out more", "context": "24F Venture capitalist" },
+  { "id": 7, "text": "Be very cautious at every stage of your life", "context": "66M Retired accountant" },
+  { "id": 8, "text": "Be humble - we're instruments of God/something larger", "context": "60F Homemaker" },
+  { "id": 9, "text": "I need to be more confident about my decisions", "context": "31F Educator" },
+  { "id": 10, "text": "Don't give into emotions, be rational and calm", "context": "26F Community builder" },
+  { "id": 11, "text": "Riyaaz roz karna chahiye (Practice daily)", "context": "22F Musician" },
+  { "id": 12, "text": "It's okay to cry", "context": "22F Musician" },
+  { "id": 13, "text": "Rayon is the best fabric", "context": "24F Entrepreneur/mathematician" },
+  { "id": 14, "text": "Stay with the problem. Give it time", "context": "26F Educator" },
+  { "id": 15, "text": "This is not the age to take responsibility", "context": "24M Marketer" },
+  { "id": 16, "text": "It's less about what good you would have than what evil you would live with", "context": "41M Musician/engineer" },
+  { "id": 17, "text": "All problems are solvable", "context": "23M Engineer/entrepreneur" },
+  { "id": 18, "text": "Life is easy inside of your comfort zone but the stories worth telling always happen outside of it.", "context": "30M Connector" },
+  { "id": 19, "text": "Trust your inner intuition and love fully whenever you can", "context": "26F Figuring things out" },
+  { "id": 20, "text": "Put 10/10? at the top of your todo list — a guiding question like Derek Sivers' hell yeah or no to solve overwhelm.", "context": "23M Engineer" },
+  { "id": 21, "text": "Always ask what do you gain by being his/her friend? If you can't answer, then it's not the right relationship for you.", "context": "27F Analyst" },
+  { "id": 22, "text": "Everything that you can think of is REAL.", "context": "26M Marketer" },
+  { "id": 23, "text": "Life doesn't end at parenthood, it begins.", "context": "37F Consultant" },
+  { "id": 24, "text": "There's more time in your hands than excuses in your head. Do the thing. Mess it up. Do it better. But whatever you do, don't marry too early.", "context": "23M Product Designer/Architect" },
+  { "id": 25, "text": "Sab Moh Maaya hai (All is illusion).", "context": "25M Human" },
+  { "id": 26, "text": "Don't give in to your anger or any other carnal desires on the spur of the moment.", "context": "24M Product Designer" },
+  { "id": 27, "text": "Optimise your life for fun.", "context": "26F Something with growth" },
+  { "id": 28, "text": "God is everything you need.", "context": "24M Data Analyst" },
+  { "id": 29, "text": "The capital tightens its grip around the fabric of economy more and more. Burn its tentacles down or we shall all face the consequences of its gluttony.", "context": "23M Student" }
 ]

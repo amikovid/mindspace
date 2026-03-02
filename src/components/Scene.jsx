@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import StarField from './StarField'
 
 // Inner component — runs inside Canvas so it can use useFrame
-function ConstellationGroup({ learnings, selectedLearning, onStarClick, isEntering }) {
+function ConstellationGroup({ learnings, selectedLearning, onStarClick, isEntering, searchQuery }) {
   const groupRef = useRef()
   const spinStart = useRef(null)
   const { camera } = useThree()
@@ -46,12 +46,13 @@ function ConstellationGroup({ learnings, selectedLearning, onStarClick, isEnteri
         learnings={learnings}
         selectedLearning={selectedLearning}
         onStarClick={onStarClick}
+        searchQuery={searchQuery}
       />
     </group>
   )
 }
 
-export default function Scene({ learnings, selectedLearning, onStarClick, isEntering }) {
+export default function Scene({ learnings, selectedLearning, onStarClick, isEntering, searchQuery }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 30], fov: 60 }}
@@ -75,6 +76,7 @@ export default function Scene({ learnings, selectedLearning, onStarClick, isEnte
         selectedLearning={selectedLearning}
         onStarClick={onStarClick}
         isEntering={isEntering}
+        searchQuery={searchQuery}
       />
 
       <TrackballControls

@@ -8,6 +8,7 @@ import LoadingScreen from './components/LoadingScreen'
 import ContributePage from './components/ContributePage'
 import AdminPage from './components/AdminPage'
 import LandingScreen from './components/LandingScreen'
+import SearchBar from './components/SearchBar'
 import learningsData from './data/learnings-processed.json'
 
 function ConstellationView() {
@@ -15,6 +16,7 @@ function ConstellationView() {
   const [audioEnabled, setAudioEnabled] = useState(true)
   const [showLanding, setShowLanding] = useState(true)
   const [isEntering, setIsEntering] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handleEnter = () => {
     setIsEntering(true)                               // spin starts immediately
@@ -50,6 +52,7 @@ function ConstellationView() {
             selectedLearning={selectedLearning}
             onStarClick={handleStarClick}
             isEntering={isEntering}
+            searchQuery={searchQuery}
           />
         </Suspense>
       </div>
@@ -76,6 +79,8 @@ function ConstellationView() {
             enabled={audioEnabled}
             onToggle={() => setAudioEnabled(!audioEnabled)}
           />
+
+          <SearchBar onSearch={setSearchQuery} />
 
           {/* Contribute floating button — bottom right */}
           <AnimatePresence>

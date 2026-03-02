@@ -4,7 +4,7 @@ import { Line } from '@react-three/drei'
 import * as THREE from 'three'
 import Star from './Star'
 
-export default function StarField({ learnings, selectedLearning, onStarClick }) {
+export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery }) {
   const { camera, controls } = useThree()
   const targetPosition = useRef(new THREE.Vector3())
   const targetLookAt = useRef(new THREE.Vector3())
@@ -53,6 +53,10 @@ export default function StarField({ learnings, selectedLearning, onStarClick }) 
       {learnings.map((learning) => {
         const isSelected = selectedLearning?.id === learning.id
         const isRelated = selectedLearning?.related.includes(learning.id)
+        const isDimmed = searchQuery
+          ? !learning.text.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            !learning.context.toLowerCase().includes(searchQuery.toLowerCase())
+          : false
 
         return (
           <Star
@@ -60,6 +64,7 @@ export default function StarField({ learnings, selectedLearning, onStarClick }) 
             learning={learning}
             isSelected={isSelected}
             isRelated={isRelated}
+            isDimmed={isDimmed}
             onClick={() => onStarClick(learning)}
           />
         )
