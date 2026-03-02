@@ -4,7 +4,7 @@ An interactive 3D visualization that displays personal learnings as stars in spa
 
 ## Features
 
-- **3D Star Field**: 13 learnings rendered as glowing stars in 3D space
+- **3D Star Field**: 29 learnings rendered as glowing stars in 3D space
 - **Semantic Positioning**: Stars positioned based on text similarity using OpenAI embeddings
 - **Interactive Exploration**: Click stars to view details, discover related insights
 - **Visual Connections**: Lines connecting semantically similar learnings
