@@ -2,13 +2,27 @@ import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export default function Star({ learning, isSelected, isRelated, isDimmed, ageColor, onClick }) {
+export default function Star({ learning, isSelected, isRelated, isDimmed, targetPosition, onClick }) {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
   const opacityRef = useRef(1)
 
+  // Animate position independently of the React prop so lerp is smooth
+  const currentPosRef = useRef(new THREE.Vector3(
+    learning.position.x,
+    learning.position.y,
+    learning.position.z
+  ))
+
   useFrame(() => {
     if (meshRef.current) {
+      // Lerp toward target position (semantic or age-sorted)
+      currentPosRef.current.lerp(
+        new THREE.Vector3(targetPosition.x, targetPosition.y, targetPosition.z),
+        0.04
+      )
+      meshRef.current.position.copy(currentPosRef.current)
+
       const targetScale = hovered ? 1.3 : isSelected ? 1.5 : isRelated ? 1.2 : 1
       meshRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
@@ -31,13 +45,12 @@ export default function Star({ learning, isSelected, isRelated, isDimmed, ageCol
     }
   })
 
-  // Selection states always win; age color only shows on neutral stars
-  const color = isSelected ? '#88ccff' : isRelated ? '#ffaa88' : (ageColor || '#ffffff')
+  const color = isSelected ? '#88ccff' : isRelated ? '#ffaa88' : '#ffffff'
 
   return (
     <mesh
       ref={meshRef}
-      position={[learning.position.x, learning.position.y, learning.position.z]}
+      position={[currentPosRef.current.x, currentPosRef.current.y, currentPosRef.current.z]}
       onClick={(e) => { e.stopPropagation(); onClick() }}
       onPointerDown={(e) => e.stopPropagation()}
       onPointerUp={(e) => { e.stopPropagation(); onClick() }}

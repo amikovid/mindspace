@@ -37,7 +37,7 @@ export default function AgeToggle({ onToggle }) {
             }}
           >
             <p className="text-white/60 text-xs font-light leading-relaxed mb-4">
-              Stars were meant to be ageless —<br />their wisdom speaks beyond years.
+              These stars were born equal —<br />sorting them by age may deceive.
             </p>
             <div className="flex gap-3 justify-center">
               <button
@@ -70,7 +70,7 @@ export default function AgeToggle({ onToggle }) {
           WebkitBackdropFilter: 'blur(10px)',
           border: `1px solid rgba(255,255,255,${stage === 'active' ? '0.2' : '0.1'})`,
         }}
-        title={stage === 'active' ? 'Hide age colours' : 'Reveal age'}
+        title={stage === 'active' ? 'Reset to constellation' : 'Sort by age'}
       >
         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
           {/* Inner dot */}

@@ -1,19 +1,45 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { Line } from '@react-three/drei'
 import * as THREE from 'three'
 import Star from './Star'
 
-// Indigo #818cf8 (young, ≤18) → Amber #fbbf24 (old, ≥72)
-function getAgeColor(context) {
-  const match = context.match(/^(\d+)/)
-  if (!match) return null
-  const age = parseInt(match[1])
-  const t = Math.min(Math.max((age - 18) / 54, 0), 1) // 0 at 18, 1 at 72
-  const r = Math.round(129 + (251 - 129) * t)  // 129 → 251
-  const g = Math.round(140 + (191 - 140) * t)  // 140 → 191
-  const b = Math.round(248 + (36  - 248) * t)  // 248 → 36
-  return `rgb(${r},${g},${b})`
+// Compute 3D positions sorted by age: Y axis = age (young at bottom, old at top)
+// Same-age stars spread along X; slight Z variation for depth
+function computeAgePositions(learnings) {
+  const withAges = learnings.map(l => {
+    const match = l.context.match(/^(\d+)/)
+    return { id: l.id, age: match ? parseInt(match[1]) : 30 }
+  })
+
+  const ages = withAges.map(w => w.age)
+  const minAge = Math.min(...ages)
+  const maxAge = Math.max(...ages)
+
+  const byAge = {}
+  withAges.forEach(({ id, age }) => {
+    if (!byAge[age]) byAge[age] = []
+    byAge[age].push(id)
+  })
+
+  const positions = {}
+  withAges.forEach(({ id, age }) => {
+    const t = (age - minAge) / (maxAge - minAge)
+    const y = (t - 0.5) * 18
+
+    const group = byAge[age]
+    const idx = group.indexOf(id)
+    const count = group.length
+    const xSpread = Math.min(count * 2.5, 16)
+    const x = count > 1 ? ((idx / (count - 1)) - 0.5) * xSpread : 0
+
+    // Deterministic Z depth using id as seed
+    const z = ((id * 7) % 10 - 5) * 0.4
+
+    positions[id] = { x, y, z }
+  })
+
+  return positions
 }
 
 export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery, showAge }) {
@@ -21,6 +47,8 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
   const targetPosition = useRef(new THREE.Vector3())
   const targetLookAt = useRef(new THREE.Vector3())
   const isAnimating = useRef(false)
+
+  const agePositions = useMemo(() => computeAgePositions(learnings), [learnings])
 
   // Animate camera to selected star
   useEffect(() => {
@@ -69,7 +97,7 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
           ? !learning.text.toLowerCase().includes(searchQuery.toLowerCase()) &&
             !learning.context.toLowerCase().includes(searchQuery.toLowerCase())
           : false
-        const ageColor = showAge ? getAgeColor(learning.context) : null
+        const starTargetPos = showAge ? agePositions[learning.id] : learning.position
 
         return (
           <Star
@@ -78,14 +106,14 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
             isSelected={isSelected}
             isRelated={isRelated}
             isDimmed={isDimmed}
-            ageColor={ageColor}
+            targetPosition={starTargetPos}
             onClick={() => onStarClick(learning)}
           />
         )
       })}
 
-      {/* Draw lines to related stars */}
-      {selectedLearning && selectedLearning.related.map((relatedId) => {
+      {/* Draw lines to related stars — hidden during age rearrangement */}
+      {selectedLearning && !showAge && selectedLearning.related.map((relatedId) => {
         const selectedStar = learnings.find(l => l.id === selectedLearning.id)
         const relatedStar = learnings.find(l => l.id === relatedId)
 
