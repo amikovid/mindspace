@@ -42,13 +42,47 @@ function computeAgePositions(learnings) {
   return positions
 }
 
-export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery, showAge }) {
+// Compute 3D positions split by gender: M → right hemisphere, F → left hemisphere
+// Stars distributed using golden angle for even spread on each half-sphere
+function computeGenderPositions(learnings) {
+  const mIds = [], fIds = []
+  learnings.forEach(l => {
+    const gender = l.context.match(/^\d+([MF])/)?.[1]
+    if (gender === 'F') fIds.push(l.id)
+    else mIds.push(l.id)
+  })
+
+  const positions = {}
+  const R = 8
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5))
+
+  const placeHemisphere = (ids, xSign) => {
+    const n = ids.length
+    ids.forEach((id, i) => {
+      // θ: polar angle from X axis, 10° → 75° so no star sits at exact tip or equator
+      const theta = (Math.PI / 18) + (i / Math.max(n - 1, 1)) * (Math.PI * 65 / 180)
+      const phi = goldenAngle * i
+      positions[id] = {
+        x: xSign * R * Math.cos(theta),
+        y: R * Math.sin(theta) * Math.cos(phi),
+        z: R * Math.sin(theta) * Math.sin(phi),
+      }
+    })
+  }
+
+  placeHemisphere(mIds, 1)   // M → right
+  placeHemisphere(fIds, -1)  // F → left
+  return positions
+}
+
+export default function StarField({ learnings, selectedLearning, onStarClick, searchQuery, showAge, showGender }) {
   const { camera, controls } = useThree()
   const targetPosition = useRef(new THREE.Vector3())
   const targetLookAt = useRef(new THREE.Vector3())
   const isAnimating = useRef(false)
 
   const agePositions = useMemo(() => computeAgePositions(learnings), [learnings])
+  const genderPositions = useMemo(() => computeGenderPositions(learnings), [learnings])
 
   // Animate camera to selected star
   useEffect(() => {
@@ -97,7 +131,11 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
           ? !learning.text.toLowerCase().includes(searchQuery.toLowerCase()) &&
             !learning.context.toLowerCase().includes(searchQuery.toLowerCase())
           : false
-        const starTargetPos = showAge ? agePositions[learning.id] : learning.position
+        const starTargetPos = showGender
+          ? genderPositions[learning.id]
+          : showAge
+            ? agePositions[learning.id]
+            : learning.position
 
         return (
           <Star
@@ -112,8 +150,8 @@ export default function StarField({ learnings, selectedLearning, onStarClick, se
         )
       })}
 
-      {/* Draw lines to related stars — hidden during age rearrangement */}
-      {selectedLearning && !showAge && selectedLearning.related.map((relatedId) => {
+      {/* Draw lines to related stars — hidden during rearrangement modes */}
+      {selectedLearning && !showAge && !showGender && selectedLearning.related.map((relatedId) => {
         const selectedStar = learnings.find(l => l.id === selectedLearning.id)
         const relatedStar = learnings.find(l => l.id === relatedId)
 
