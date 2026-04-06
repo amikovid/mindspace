@@ -128,7 +128,7 @@ export default function ContributePage() {
   const isFormValid = formData.age && formData.gender && formData.occupation && formData.wisdom.length >= 10
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="h-full w-full bg-black flex flex-col p-6 relative overflow-y-auto overflow-x-hidden">
       <FloatingParticles />
 
       <AnimatePresence mode="wait">
@@ -139,7 +139,7 @@ export default function ContributePage() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -20 }}
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-            className="max-w-md w-full text-center relative z-10"
+            className="max-w-md w-full text-center relative z-10 m-auto py-8"
           >
             <motion.div
               className="glass rounded-3xl p-12 relative overflow-hidden"
@@ -241,7 +241,7 @@ export default function ContributePage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-            className="max-w-md w-full relative z-10"
+            className="max-w-md w-full relative z-10 m-auto py-8"
           >
             <motion.div
               initial={{ opacity: 0, x: -20 }}
